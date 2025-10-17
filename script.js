@@ -34,6 +34,11 @@ printList();
 
 saveButton.addEventListener("click", () => {
     let newItem = userInput.value;
+    // Hämta
+    let todoItems = JSON.parse(localStorage.getItem("todoItems"));
+    // Ändra
     todoItems.push(newItem);
+    // Ersätta
+    localStorage.setItem("todoItems", JSON.stringify(todoItems));
     printList();
 })
