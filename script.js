@@ -24,7 +24,7 @@ function printList() {
         todoList.appendChild(li);
 
         li.addEventListener("click", (evt) => {
-            todoItems.splice(todoItems.indexOf(evt.target.id), 1)
+            deleteItem(evt.target.id);
             printList();
         })
     }
@@ -42,3 +42,9 @@ saveButton.addEventListener("click", () => {
     localStorage.setItem("todoItems", JSON.stringify(todoItems));
     printList();
 })
+
+function deleteItem(id) {
+    let todoItems = JSON.parse(localStorage.getItem("todoItems"));
+    todoItems.splice(todoItems.indexOf(id), 1);
+    localStorage.setItem("todoItems", JSON.stringify(todoItems));
+}
