@@ -1,50 +1,15 @@
+import printList from "./printList.js";
+import addItem from "./addItem.js";
+import checkLocalStorage from "./checkLocalStorage.js";
+
 const todoList = document.getElementById("todoList");
 const userInput = document.getElementById("userInput");
 const saveButton = document.getElementById("saveButton");
 
-
-if(localStorage.getItem("todoItems")) {
-    console.log("LS todoItems exists");
-} else {
-    let todoItems = ["Print out the list", "Add to list", "Remove from list"];
-    console.log("LS todoItems doesnt exist - create it!");
-    localStorage.setItem("todoItems", JSON.stringify(todoItems))
-}
-
-function printList() {
-    todoList.innerHTML = "";
-
-    let todoItems = JSON.parse(localStorage.getItem("todoItems"));
-    for (let item of todoItems) {
-
-        let li = document.createElement("li");
-        li.textContent = item;
-        li.id = item;
-
-        todoList.appendChild(li);
-
-        li.addEventListener("click", (evt) => {
-            deleteItem(evt.target.id);
-            printList();
-        })
-    }
-}
-
-printList();
+checkLocalStorage();
+printList(todoList);
 
 saveButton.addEventListener("click", () => {
-    let newItem = userInput.value;
-    // Hämta
-    let todoItems = JSON.parse(localStorage.getItem("todoItems"));
-    // Ändra
-    todoItems.push(newItem);
-    // Ersätta
-    localStorage.setItem("todoItems", JSON.stringify(todoItems));
-    printList();
+   addItem(userInput.value);
+   printList(todoList);
 })
-
-function deleteItem(id) {
-    let todoItems = JSON.parse(localStorage.getItem("todoItems"));
-    todoItems.splice(todoItems.indexOf(id), 1);
-    localStorage.setItem("todoItems", JSON.stringify(todoItems));
-}
